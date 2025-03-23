@@ -60,19 +60,36 @@ const patchUser = async (req, res) => {
 const resetPassword = async (req, res) => {
   const { email, newPassword } = req.body;
   const user = await UserModel.findOne({ email });
-   if (!user) {
-    return res.status(400).send('User with this email not found');
+
+  if (!user) {
+    return res.status(400).json({ success: false, message: 'User with this email not found' });
   }
 
   if (newPassword) {
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
     user.password = hashedPassword;
     await user.save();
-     await changePasswordEmail(email)
-    return res.send('Password updated correctly');
+
+    await changePasswordEmail(email);
+
+    return res.status(200).json({ success: true, message: 'Password updated successfully' });
   }
 
-  res.send('User not found. Enter new password.');
+  res.status(400).json({ success: false, message: 'New password is required' });
 };
 
-module.exports = { getAllUsers, getUserById, postNewUser, patchUser, resetPassword };
+
+const deleteUser = async (req, res) => {
+  try {
+    const idUser = req.params._id;
+    const user = await UserModel.findByIdAndDelete(idUser);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found",});
+    }
+    res.status(200).json({ success: true, message: "User successfully deleted", });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error deleting de user", error: error.message,});
+  }
+};
+
+module.exports = { getAllUsers, getUserById, postNewUser, patchUser, resetPassword, deleteUser };

@@ -65,7 +65,7 @@ const deleteTransaction = async (req, res) => {
   }
 };
 
-//obtiene todas las transacciones de un usuario sea como remitente o receptor
+// all transactions by user
 const getUserTransactionsById = async (req, res) => {
   try {
     const userId = req.user?._id; 
@@ -75,7 +75,7 @@ const getUserTransactionsById = async (req, res) => {
 
     const transactions = await TransactionModel.find({
       $or: [{ sender: userId }, { receiver: userId }],
-    });
+    }).populate("sender", "email").populate("receiver", "email")
 
     if (!transactions || transactions.length === 0) {
       return res.status(404).json({ status: "Failed", message: "No transactions found for this user" });
@@ -111,11 +111,11 @@ const updateTransactionStatus = async (req, res) => {
   }
 };
 
-// obtiene una  transaccion con nombre y correo de los usuarios 
+// one transaction 
 const getTransactionDetails = async (req, res) => {
   try {
     const { _id } = req.params;
-    const transaction = await TransactionModel.findById(_id).populate("receiver", "username email");
+    const transaction = await TransactionModel.findById(_id).populate("sender", "email").populate("receiver", "email");
 
     if (!transaction) {
       return res.status(404).json({ status: "Failed", message: "Transaction not found" });
