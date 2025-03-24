@@ -17,6 +17,12 @@ const postNewTransaction = async (req, res) => {
       return res.status(400).json({ status: "Failed", message: "Insufficient balance" });
     }
 
+    senderUser.balance -= amount;
+    receiverUser.balance += amount;
+
+   await senderUser.save();
+    await receiverUser.save();
+
     const newTransaction = new TransactionModel({
       sender: senderUser._id,
       receiver: receiverUser._id,
@@ -25,20 +31,15 @@ const postNewTransaction = async (req, res) => {
     });
     await newTransaction.save();
 
-    senderUser.balance -= amount;
-    receiverUser.balance += amount;
-
-    await senderUser.save();
-    await receiverUser.save();
-
     await doneTransactionEmail(senderUser.email);
     await receivedTransactionEmail(receiverUser.email);
 
-    res.status(201).json({ status: "Success", message: "Transaction created successfully", transaction: newTransaction });
+    res.status(201).json({ status: "Success", message: "Transaction created successfully", transaction: newTransaction, senderBalance:senderUser.balance, receiverBalance: receiverUser.balance, amount, sender: senderUser._id, receiver: receiverUser._id });
   } catch (error) {
     res.status(500).json({ status: "Failed", message: "There was an error creating the transaction", error: error.message });
   }
 };
+
 
 const deleteTransaction = async (req, res) => {
   const { _id } = req.params;

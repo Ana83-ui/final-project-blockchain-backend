@@ -1,5 +1,5 @@
 const express = require("express");
-const {  postNewTransaction,  deleteTransaction,  getUserTransactionsById,  updateTransactionStatus,  getTransactionDetails,} = require("../controllers/transactionController");
+const {  postNewTransaction,  deleteTransaction,  getUserTransactionsById,  updateTransactionStatus,  getTransactionDetails } = require("../controllers/transactionController");
 const {tokenVerify} = require("../middleware/auth-token")
 const router = express.Router();
 
