@@ -128,4 +128,17 @@ const getTransactionDetails = async (req, res) => {
   }
 };
 
-module.exports = {  postNewTransaction,  deleteTransaction,  getUserTransactionsById,  updateTransactionStatus,  getTransactionDetails };
+const getBalance = async (req, res) => {
+  try {
+    const userId = req.params._id;  
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ status: "Failed", message: "User not found" });
+    }
+    res.status(200).json({ status: "Success", balance: user.balance });
+  } catch (error) {
+    res.status(500).json({ status: "Failed", message: "There was an error retrieving the balance", error: error.message });
+  }
+};
+
+module.exports = {  postNewTransaction,  deleteTransaction,  getUserTransactionsById,  updateTransactionStatus,  getTransactionDetails, getBalance };
