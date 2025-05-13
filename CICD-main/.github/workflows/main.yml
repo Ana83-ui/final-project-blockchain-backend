@@ -1,0 +1,34 @@
+name: CI
+
+on: 
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: echo build
+      - name: Ejecutar checkout
+        uses: actions/checkout@v4
+      - name: Instalar dependencias
+        run: npm i
+      - name: Realizar test
+        run: npm test    
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: docker build
+        run: echo docker build
+      - name: docker push para subir a dockerhub
+        run: echo docker push para subir a dockerhub
+      - name: Conectar al EC2
+        run: echo Conectar al EC2
+      - name: docker pull para bajarnos la nueva imagen de docker
+        run: echo docker pull para bajarnos la nueva imagen de docker
+      - name: Docker stop container
+        run: echo Docker stop container
+      - name: docker run nuevo contenedor
+        run: echo docker run nuevo contenedor
