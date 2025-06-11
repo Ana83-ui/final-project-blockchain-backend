@@ -1,0 +1,109 @@
+
+:root{
+--font-body: "Meow Script", sans-serif;
+}
+
+
+.section {
+  display: grid;
+  grid-template-columns: 80% 1fr;
+}
+
+
+.element {
+
+  background-image:
+      /* linear-gradient(to right, #bfc2c7, #bec1c6, #dee5ed);  */
+      linear-gradient(
+    to right,
+    rgba(191, 194, 199, 0.5),
+    rgba(190, 193, 198, 0.7),
+    rgba(222, 229, 237, 1)
+  );
+  /* background-size: 50px 50px, cover, cover, cover; */
+}
+
+.title{
+    font-family: var(--font-body);
+    color: #1f99d5;
+}
+.pattern{
+    background-color: #dee5ed;
+    opacity: 1;
+    background-image:  radial-gradient(#F9FAFB 2px, transparent 2px), radial-gradient(#F9FAFB 2px, #dee5ed 2px);
+    background-size: 80px 80px;
+    background-position: 0 0,40px 40px;
+}
+
+.newsletter{
+    height: 100px;
+    text-align: center;
+    padding: 15px;
+}
+
+.imagen-fondo {
+    background: #0d0628 url(/img/css-patt.png);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: #0d0628;
+}
+
+
+
+
+
+    /* Contenedor del menú */
+    .menu {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Botón del menú */
+    .menu-btn {
+      background-color: #042942;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      margin: 30px;
+    }
+
+    /* Contenido del menú */
+    .menu-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .menu-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .menu-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Mostrar el menú al pasar el mouse */
+    .menu:hover .menu-content {
+      display: block;
+    }
+
+
+
+
+a{
+    text-decoration: none;
+}
+
+img{
+  width: 200px;
+}
+
